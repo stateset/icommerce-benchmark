@@ -22,6 +22,7 @@ const tasks = [
   '16-restart-replay',
   '17-mcp-order-inspect',
   '18-mcp-write-preview',
+  '19-mcp-http-inspect',
 ];
 
 let failed = 0;

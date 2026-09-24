@@ -33,6 +33,7 @@ API calls; verifiers check the same states the docs assert.
 | 16-restart-replay | `guides/comprehensive-testing-guide.mdx` | Payment replay across a process restart |
 | 17-mcp-order-inspect | `guides/first-operation.mdx` agent step + `stateset-icommerce-mcp` first read | Order + stock over MCP stdio tools |
 | 18-mcp-write-preview | `stateset-icommerce-mcp` permission profile | Preview-only write changes nothing |
+| 19-mcp-http-inspect | `mcp-servers` two transports + `stateset-icommerce-mcp` | Same inspect over Streamable HTTP |
 
 Tasks 01–04, 06–15 use `:memory:` databases for hermetic runs. Tasks 05 and
 16 use file-backed databases (`./store.db`, `./restart.db` in the working
@@ -61,7 +62,7 @@ benchmark/
 
 ```bash
 npm ci
-npm run benchmark   # checks all example solutions (18/18)
+npm run benchmark   # checks all example solutions (19/19)
 npm test            # node:test suite, including negative controls
 node tasks/01-order-inspect/verifier.mjs tasks/01-order-inspect/solution.example.mjs
 ```
@@ -69,7 +70,10 @@ node tasks/01-order-inspect/verifier.mjs tasks/01-order-inspect/solution.example
 Tasks 01–16 use `@stateset/embedded` directly. Tasks 17–18 speak to the
 `stateset-mcp` server (from `@stateset/cli`, same 1.35.1 pin) over stdio; the
 verifier puts its binary on `PATH` and invokes the candidate as
-`node solution.mjs <dbPath> <orderId>` with a 60s timeout.
+`node solution.mjs <dbPath> <orderId>` with a 60s timeout. Task 19 uses the
+same server over Streamable HTTP (`stateset-mcp-http`): the verifier boots it
+against the fixture on a loopback port and invokes the candidate as
+`node solution.mjs <baseUrl> <orderId>`.
 
 ## Rules for models (also stated in each TASK.md)
 
@@ -97,6 +101,9 @@ matching task + example + verifier together.
 
 ## Deliberately out of scope
 
-Other MCP servers (ResponseCX, Sync, NSR, EDI, Voice) and hosted REST tasks.
-Those are the right next expansion; every embedded onboarding program and the
-core commerce MCP read/write-safety model are already covered here.
+Servers that need credentials or services an offline grader cannot provide:
+Response and Workstream MCP (organization/brand credentials), NSR MCP (a
+running NSR server binary plus API key), Sync/EDI/Voice/Mail/Sandbox/Computer
+Use (tenants, partners, numbers, runtimes), and hosted REST tasks. Every
+embedded onboarding program, the core commerce MCP read/write-safety model,
+and both MCP transports are covered here.

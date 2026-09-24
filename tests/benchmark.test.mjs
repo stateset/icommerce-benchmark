@@ -26,6 +26,7 @@ const cases = [
   '16-restart-replay',
   '17-mcp-order-inspect',
   '18-mcp-write-preview',
+  '19-mcp-http-inspect',
 ];
 
 function runVerifier(name, solution) {
