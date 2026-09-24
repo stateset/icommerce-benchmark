@@ -1,0 +1,19 @@
+{
+  "name": "stateset-benchmark-starter",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Public benchmark starter: teach frontier models to use the StateSet embedded commerce engine with verifiable local tasks.",
+  "engines": {
+    "node": ">=20.20.0",
+    "npm": ">=10.0.0"
+  },
+  "dependencies": {
+    "@stateset/embedded": "1.35.1"
+  },
+  "scripts": {
+    "benchmark": "node run.mjs",
+    "test": "node --test tests/*.test.mjs"
+  },
+  "license": "MIT"
+}
