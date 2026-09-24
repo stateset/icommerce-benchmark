@@ -9,7 +9,8 @@
     "npm": ">=10.0.0"
   },
   "dependencies": {
-    "@stateset/embedded": "1.35.1"
+    "@stateset/embedded": "1.35.1",
+    "@stateset/cli": "1.35.1"
   },
   "scripts": {
     "benchmark": "node run.mjs",

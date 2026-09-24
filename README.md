@@ -31,6 +31,8 @@ API calls; verifiers check the same states the docs assert.
 | 14-integration-suite | `guides/api-testing.mdx` | Cancel-restore, no-partial-write, replay |
 | 15-error-handling | `guides/error-handling-best-practices.mdx` | Expected rejection vs propagated failure |
 | 16-restart-replay | `guides/comprehensive-testing-guide.mdx` | Payment replay across a process restart |
+| 17-mcp-order-inspect | `guides/first-operation.mdx` agent step + `stateset-icommerce-mcp` first read | Order + stock over MCP stdio tools |
+| 18-mcp-write-preview | `stateset-icommerce-mcp` permission profile | Preview-only write changes nothing |
 
 Tasks 01–04, 06–15 use `:memory:` databases for hermetic runs. Tasks 05 and
 16 use file-backed databases (`./store.db`, `./restart.db` in the working
@@ -53,16 +55,21 @@ benchmark/
 ## Evaluate a model
 
 1. Give the model `tasks/<name>/TASK.md`.
-2. Ask it to write a single `solution.mjs` (Node ESM, `@stateset/embedded`).
+2. Ask it to write a single `solution.mjs` (Node ESM).
 3. Run `node tasks/<name>/verifier.mjs /path/to/solution.mjs`.
 4. Exit 0 with `PASS` = task solved. Anything else = fail; the verifier prints why.
 
 ```bash
 npm ci
-npm run benchmark   # checks all example solutions (16/16)
+npm run benchmark   # checks all example solutions (18/18)
 npm test            # node:test suite, including negative controls
 node tasks/01-order-inspect/verifier.mjs tasks/01-order-inspect/solution.example.mjs
 ```
+
+Tasks 01–16 use `@stateset/embedded` directly. Tasks 17–18 speak to the
+`stateset-mcp` server (from `@stateset/cli`, same 1.35.1 pin) over stdio; the
+verifier puts its binary on `PATH` and invokes the candidate as
+`node solution.mjs <dbPath> <orderId>` with a 60s timeout.
 
 ## Rules for models (also stated in each TASK.md)
 
@@ -90,6 +97,6 @@ matching task + example + verifier together.
 
 ## Deliberately out of scope
 
-MCP tool-use tasks (ResponseCX, Sync, NSR, EDI, Voice) and hosted REST tasks.
-Those are the right next expansion once this repo is public and stable; every
-embedded onboarding program is already covered here.
+Other MCP servers (ResponseCX, Sync, NSR, EDI, Voice) and hosted REST tasks.
+Those are the right next expansion; every embedded onboarding program and the
+core commerce MCP read/write-safety model are already covered here.

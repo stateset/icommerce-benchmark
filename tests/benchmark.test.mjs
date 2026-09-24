@@ -24,6 +24,8 @@ const cases = [
   '14-integration-suite',
   '15-error-handling',
   '16-restart-replay',
+  '17-mcp-order-inspect',
+  '18-mcp-write-preview',
 ];
 
 function runVerifier(name, solution) {
